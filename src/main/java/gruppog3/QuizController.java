@@ -1,4 +1,4 @@
-package gruppog3.jaassignment10;
+package gruppog3;
 
 public class QuizController {
 }

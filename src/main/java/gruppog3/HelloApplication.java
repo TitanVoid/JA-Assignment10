@@ -1,4 +1,4 @@
-package gruppog3.jaassignment10;
+package gruppog3;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
