@@ -1,4 +1,4 @@
-module gruppog3.jaassignment10 {
+module gruppog3 {
     requires javafx.controls;
     requires javafx.fxml;
 
