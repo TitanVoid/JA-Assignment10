@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="gruppog3.QuizController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="gruppog3.RegistrationFormController">
     <children>
         <Label layoutX="89.0" layoutY="50.0" text="Ciao! Compila il form e rispondi alle domande">
             <font>
@@ -32,7 +32,7 @@
         <TextField fx:id="textFieldName" layoutX="225.0" layoutY="120.0" />
         <TextField fx:id="textFieldSurname" layoutX="226.0" layoutY="187.0" />
         <TextField fx:id="textFieldQuestion" layoutX="225.0" layoutY="256.0" />
-        <Button fx:id="startButton" layoutX="273.0" layoutY="330.0" mnemonicParsing="false" onAction="#OnStart" text="Inizia!">
+        <Button fx:id="startButton" layoutX="273.0" layoutY="330.0" mnemonicParsing="false" onAction="#onStart" text="Inizia!">
             <font>
                 <Font size="14.0" />
             </font>
