@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Objects;
@@ -35,14 +36,16 @@ public class RegistrationFormController implements Initializable {
 
 
 
-        textFieldName.setTextFormatter(new TextFormatter<String>(s-> s.getControlNewText().matches("\\D") ? s : null));
+        textFieldName.setTextFormatter(new TextFormatter<String>(s-> s.getControlNewText().matches("\\D{0,100}") ? s : null));
 
-        textFieldName.setTextFormatter(new TextFormatter<String>(s-> s.getControlNewText().matches("\\D") ? s : null));
+        textFieldSurname.setTextFormatter(new TextFormatter<String>(s-> s.getControlNewText().matches("\\D{0,100}") ? s : null));
 
-        textFieldName.setTextFormatter(new TextFormatter<String>(s-> s.getControlNewText().matches("\\d[0-9]{0,10}") ? s : null));
+        textFieldQuestion.setTextFormatter(new TextFormatter<String>(s-> s.getControlNewText().matches("[1-9]?|10") ? s : null));
 
 
-
+        startButton.disableProperty().bind(textFieldName.textProperty().isEmpty()  );
+        startButton.disableProperty().bind(textFieldSurname.textProperty().isEmpty());
+        startButton.disableProperty().bind(textFieldQuestion.textProperty().isEmpty());
 
     }
 
@@ -52,11 +55,12 @@ public class RegistrationFormController implements Initializable {
 
         try{
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("QuizView.fxml")));
-            Parent root = loader.load(); //????
+            loader.load();
             QuizController controller = loader.getController();
 
             Scene scene = textFieldName.getScene();
-            scene.setRoot(root);
+            Stage stage = (Stage) scene.getWindow();
+            stage.setScene(scene);
 
 
         }catch (Exception e){
