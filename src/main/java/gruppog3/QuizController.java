@@ -83,7 +83,7 @@ public class QuizController implements Initializable {
     }
 
     private void timerFinished() {
-        NumericQuestionAttempt attempt = new NumericQuestionAttempt(questionGenerator, questionGenerator.getResult() + 1);
+        NumericQuestionAttempt attempt = new NumericQuestionAttempt(questionGenerator, -9999);
         this.resultMap.put(currentQuestion, attempt);
         answerTF.clear();
         nextQuestion();
