@@ -28,6 +28,9 @@ public class QuizController implements Initializable {
     private NumericQuestion questionGenerator;
     private Timeline timer;
     private int timeLeft;
+    private String nomeUtente;
+    private String cognomeUtente;
+    private int numeroTentativi;
 
     @FXML
     private Label questionLabel;
@@ -52,6 +55,14 @@ public class QuizController implements Initializable {
         timerLabel.setText(String.valueOf(timeLeft));
     }
 
+
+    public void initData(String nome, String cognome, int tentativi){
+        this.nomeUtente = nome;
+        this.cognomeUtente = cognome;
+        this.numeroTentativi = tentativi;
+    }
+
+
     public void startQuiz(int questionCount){
         this.questionCount = questionCount;
         nextQuestion();
@@ -72,7 +83,7 @@ public class QuizController implements Initializable {
     }
 
     private void timerFinished() {
-        NumericQuestionAttempt attempt = new NumericQuestionAttempt(questionGenerator, 0);
+        NumericQuestionAttempt attempt = new NumericQuestionAttempt(questionGenerator, questionGenerator.getResult() + 1);
         this.resultMap.put(currentQuestion, attempt);
         answerTF.clear();
         nextQuestion();
@@ -84,6 +95,7 @@ public class QuizController implements Initializable {
             endQuiz();
             return;
         }
+        questionGenerator = new NumericQuestion();
         questionGenerator.randomInit();
         roundLabel.setText(++currentQuestion + "/" + questionCount);
         questionLabel.setText(questionGenerator.toString());
@@ -96,6 +108,7 @@ public class QuizController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ReviewView.fxml"));
             Parent root = loader.load();
             ReviewController controller = loader.getController();
+            controller.initData(nomeUtente, cognomeUtente, resultMap);
             Stage stage = (Stage) timerLabel.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

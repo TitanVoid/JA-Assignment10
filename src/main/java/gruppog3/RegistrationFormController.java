@@ -58,6 +58,12 @@ public class RegistrationFormController implements Initializable {
             Parent root = loader.load();
 
             QuizController controller = loader.getController();
+            String nome = textFieldName.getText();
+            String cognome = textFieldSurname.getText();
+            int nDomande = Integer.parseInt(textFieldQuestion.getText());
+
+            controller.initData(nome, cognome, nDomande);
+
             Stage stage = (Stage) textFieldName.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
