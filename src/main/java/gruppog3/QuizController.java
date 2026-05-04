@@ -26,6 +26,8 @@ public class QuizController implements Initializable {
     private Map<Integer, NumericQuestionAttempt> resultMap;
     private int currentQuestion;
     private NumericQuestion questionGenerator;
+    private Timeline timer;
+    private int timeLeft;
 
     @FXML
     private Label questionLabel;
@@ -43,11 +45,11 @@ public class QuizController implements Initializable {
         this.resultMap = new HashMap<>();
         this.questionGenerator = new NumericQuestion();
         this.currentQuestion = 0;
-
+        this.timeLeft = 30;
         answerTF.setTextFormatter(new TextFormatter<Integer>(s-> s.getControlNewText().matches("[+-]?\\d*") ? s : null));
 
         fattoBtn.disableProperty().bind(answerTF.textProperty().isEmpty());
-
+        timerLabel.setText(String.valueOf(timeLeft));
     }
 
     public void startQuiz(int questionCount){
@@ -55,7 +57,29 @@ public class QuizController implements Initializable {
         nextQuestion();
     }
 
+    private void startTimer(){
+        timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            timeLeft--;
+            timerLabel.setText(String.valueOf(timeLeft));
+            if (timeLeft <= 0) {
+                timer.stop();
+                timerLabel.setText("30");
+                timerFinished();
+            }
+        }));
+        timer.setCycleCount(Timeline.INDEFINITE);
+        timer.play();
+    }
+
+    private void timerFinished() {
+        NumericQuestionAttempt attempt = new NumericQuestionAttempt(questionGenerator, 0);
+        this.resultMap.put(currentQuestion, attempt);
+        answerTF.clear();
+        nextQuestion();
+    }
+
     private void nextQuestion(){
+        if (timer != null) timer.stop();
         if (currentQuestion >= questionCount) {
             endQuiz();
             return;
@@ -63,6 +87,8 @@ public class QuizController implements Initializable {
         questionGenerator.randomInit();
         roundLabel.setText(++currentQuestion + "/" + questionCount);
         questionLabel.setText(questionGenerator.toString());
+        timeLeft = 30;
+        startTimer();
     }
 
     private void endQuiz(){
