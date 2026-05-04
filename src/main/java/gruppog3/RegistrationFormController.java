@@ -43,9 +43,8 @@ public class RegistrationFormController implements Initializable {
         textFieldQuestion.setTextFormatter(new TextFormatter<String>(s-> s.getControlNewText().matches("[1-9]?|10") ? s : null));
 
 
-        startButton.disableProperty().bind(textFieldName.textProperty().isEmpty()  );
-        startButton.disableProperty().bind(textFieldSurname.textProperty().isEmpty());
-        startButton.disableProperty().bind(textFieldQuestion.textProperty().isEmpty());
+        startButton.disableProperty().bind(textFieldName.textProperty().isEmpty().or(textFieldSurname.textProperty().isEmpty()).or(textFieldQuestion.textProperty().isEmpty()));
+        
 
     }
 
@@ -54,13 +53,15 @@ public class RegistrationFormController implements Initializable {
     private void onStart() {
 
         try{
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("QuizView.fxml")));
-            loader.load();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("QuizView.fxml"));
+            Parent root = loader.load();
+
             QuizController controller = loader.getController();
 
-            Scene scene = textFieldName.getScene();
-            Stage stage = (Stage) scene.getWindow();
-            stage.setScene(scene);
+            Stage stage = (Stage) textFieldName.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
 
 
         }catch (Exception e){
