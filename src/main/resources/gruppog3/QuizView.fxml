@@ -34,7 +34,7 @@
             <Insets top="15.0" />
          </VBox.margin>
       </Label>
-      <Button mnemonicParsing="false" onAction="#advanceAction" text="Fatto">
+      <Button fx:id="fattoBtn" mnemonicParsing="false" onAction="#advanceAction" text="Fatto">
          <font>
             <Font size="16.0" />
          </font>

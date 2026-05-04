@@ -10,8 +10,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -33,12 +35,19 @@ public class QuizController implements Initializable {
     private Label roundLabel;
     @FXML
     private Label timerLabel;
+    @FXML
+    private Button fattoBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.resultMap = new HashMap<>();
         this.questionGenerator = new NumericQuestion();
         this.currentQuestion = 0;
+
+        answerTF.setTextFormatter(new TextFormatter<Integer>(s-> s.getControlNewText().matches("[+-]?\\d*") ? s : null));
+
+        fattoBtn.disableProperty().bind(answerTF.textProperty().isEmpty());
+
     }
 
     public void startQuiz(int questionCount){
